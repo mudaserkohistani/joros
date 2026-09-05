@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JOROS — AI Software Builder</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header>
+  <h1 id="app-title">JOROS</h1>
+  <span id="system-status" class="status-pill">checking status…</span>
+  <div id="language-switcher">
+    <label for="language-select">🌐</label>
+    <select id="language-select">
+      <option value="auto">Auto Detect</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <section id="composer">
+    <h2>Describe what you want to build</h2>
+    <textarea id="idea-input" placeholder="e.g. Build me a modern restaurant website with a menu, shopping cart, contact page, and admin dashboard."></textarea>
+    <button id="build-btn">Build it</button>
+    <p class="hint">JOROS currently has a real generator for websites / simple web apps. Other project types (Android, iOS, desktop, games, APIs, bots, AI agents) are detected but honestly reported as not-yet-implemented — see status panel.</p>
+  </section>
+
+  <section id="project-view" hidden>
+    <div class="project-header">
+      <h2 id="project-name"></h2>
+      <span id="project-status" class="status-pill"></span>
+    </div>
+
+    <div id="confirmation-panel" hidden>
+      <h3>Action requires your confirmation</h3>
+      <div id="confirmation-list"></div>
+    </div>
+
+    <div id="secrets-panel" hidden>
+      <h3>Credentials needed</h3>
+      <div id="secrets-list"></div>
+      <form id="secret-form">
+        <input id="secret-key" placeholder="KEY_NAME (e.g. STRIPE_SECRET_KEY)" />
+        <input id="secret-value" placeholder="value" type="password" />
+        <button type="submit">Save securely</button>
+      </form>
+      <p class="hint">Values are written only to this project's local <code>.env</code> file, never into generated source, and never returned by the API once saved.</p>
+    </div>
+
+    <div class="columns">
+      <div class="col">
+        <h3>Pipeline log</h3>
+        <div id="log-view"></div>
+      </div>
+      <div class="col">
+        <h3>Files</h3>
+        <ul id="file-list"></ul>
+        <h3>Preview</h3>
+        <div id="preview-area">
+          <p class="hint">No preview running.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="iterate-panel">
+      <h3>Modify with natural language</h3>
+      <input id="iterate-input" placeholder="e.g. make the homepage darker" />
+      <button id="iterate-btn">Apply</button>
+      <div id="iterate-result"></div>
+    </div>
+
+    <div id="voice-panel">
+      <h3>Voice</h3>
+      <div class="voice-controls">
+        <button id="mic-btn" class="mic-button" title="Press and speak a command">🎤</button>
+        <span id="mic-state" class="status-pill">🎤 Ready</span>
+      </div>
+      <div id="voice-transcript" class="hint"></div>
+      <div id="voice-response" class="hint"></div>
+
+      <details id="voice-settings">
+        <summary id="voice-settings-heading">Voice Settings</summary>
+        <label><input type="checkbox" id="voice-enabled-toggle" checked /> <span id="voice-enabled-label">Voice enabled</span></label>
+        <label id="response-language-row">
+          <span id="response-language-label">Response language</span>
+          <select id="response-language-select"><option value="auto">Auto</option></select>
+        </label>
+        <label>
+          <span id="speech-speed-label">Speech speed</span>
+          <input type="range" id="speech-speed" min="0.5" max="1.5" step="0.1" value="1" />
+        </label>
+      </details>
+    </div>
+  </section>
+
+  <section id="project-history">
+    <h2>Projects</h2>
+    <ul id="project-list"></ul>
+  </section>
+</main>
+
+<script src="/shared/voiceStateMachine.js"></script>
+<script src="app.js"></script>
+<script src="voice.js"></script>
+</body>
+</html>
